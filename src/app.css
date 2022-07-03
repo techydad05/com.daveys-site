@@ -1,0 +1,17 @@
+/* Write your global styles here, in PostCSS syntax */
+
+@import "@fontsource/fira-mono";
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #53333b;
+  height: 100vh;
+}
