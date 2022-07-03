@@ -37,8 +37,7 @@ img {
 	box-sizing:border-box;
 	display:inline-block;
 	margin: 40px;
-	height:90vh;
-	/* max-height: 90%; */
+	/* height:90vh; */
 	padding:8vmin;
 	position:relative;
 	text-align:center;
@@ -64,5 +63,10 @@ img {
 	position:absolute;
 	right:-2.5vmin;
 	top:-2.5vmin;
+}
+@media (min-width: 640px) {
+	.frame {
+		height: 90vh;
+	}
 }
 </style>
