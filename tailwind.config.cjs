@@ -4,7 +4,11 @@ const config = {
   content: ["./src/**/*.{html,js,svelte,ts}"],
 
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'ping-slow': 'ping 2s infinite',
+      }
+    },
   },
 
   plugins: [daisyui],
