@@ -1,8 +1,16 @@
 <script>
-	import Counter from '$lib/Counter.svelte'
 	import FaChevronDown from 'svelte-icons/fa/FaChevronDown.svelte'
 	import * as animateScroll from "svelte-scrollto"
-
+	import { onMount } from 'svelte';
+	let Carousel; // for saving Carousel component class
+	let carousel; // for calling methods of the carousel instance
+	onMount(async () => {
+		const module = await import('svelte-carousel');
+		Carousel = module.default;
+	});
+	const handleNextClick = () => {
+		carousel.goToNext()
+	}
 	function handleClick() {
 		animateScroll.scrollTo({element:"#hero"})
 	}
@@ -25,7 +33,7 @@
 <section id="hero">
 	<div class="hero">
 		<div class="hero-content flex-col lg:flex-row p-10">
-		  <img src="pic2.jpg" class="max-w-sm shadow-2xl" />
+		  <img src="pic2.jpg" class="max-w-sm shadow-2xl w-[100%]" />
 		  <div class="text-white">
 			<h1 class="text-3xl lg:text-5xl font-bold">One of my Faves</h1>
 			<p class="text-xl italic py-6">This is one of my favorite pieces and could be an inspiration for a piece I make for you!</p>
@@ -37,37 +45,28 @@
 <section id="about" class="h-screen bg-red-900">
 	<div class="p-10  text-white">
 		<h1 class="text-3xl lg:text-5xl font-bold mb-5">A Little Bit About Me...</h1>
-		<p class="text-md lg:text-lg">
-			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus totam placeat labore, ipsa quam tempore odit repellat, corrupti iure laudantium perferendis architecto pariatur explicabo commodi et magnam iusto deserunt! Rem? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus totam placeat labore, ipsa quam tempore odit repellat, corrupti iure laudantium perferendis architecto pariatur explicabo commodi et magnam iusto deserunt! Rem? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus totam placeat labore, ipsa quam tempore odit repellat, corrupti iure laudantium perferendis architecto pariatur explicabo commodi et magnam iusto deserunt! Rem? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus totam placeat labore, ipsa quam tempore odit repellat, corrupti iure laudantium perferendis architecto pariatur explicabo commodi et magnam iusto deserunt! Rem?</p>
+		<p class="text-xl">
+			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus totam placeat labore, ipsa quam tempore odit repellat, corrupti iure laudantium perferendis architecto pariatur explicabo commodi et magnam iusto deserunt! Rem? Lorem ipsum dolor, sit amet consectetur adipisicing Rem?</p>
 			<button on:click={() => animateScroll.scrollTo({element:"#more"})} class="mt-5 btn btn-primary bg-blue-800 border-blue-800 hover:bg-black hover:border-red-800">More of My Work</button>
 	</div>
 </section>
 <section id="more" class="p-10 text-white flex-col lg:flex-row">
-	<h1 class="text-3xl lg:text-5xl font-bold my-4">More of My Stuff...</h1>
-	<div class="w-[80%] lg:w-[50%] mx-auto">
-		<div class="carousel w-full">
-			<div id="slide1" class="carousel-item relative w-full">
-				<img src="/pic1.jpg" class="w-full" />
-				<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide3" class="btn btn-circle">❮</a> 
-				<a href="#slide2" class="btn btn-circle">❯</a>
-				</div>
-			</div> 
-			<div id="slide2" class="carousel-item relative w-full">
-				<img src="/pic2.jpg" class="w-full" />
-				<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide1" class="btn btn-circle">❮</a> 
-				<a href="#slide3" class="btn btn-circle">❯</a>
-				</div>
-			</div> 
-			<div id="slide3" class="carousel-item relative w-full">
-				<img src="/pic3.jpg" class="w-full" />
-				<div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-				<a href="#slide2" class="btn btn-circle">❮</a> 
-				<a href="#slide1" class="btn btn-circle">❯</a>
-				</div>
-			</div> 
+	<h1 class="text-5xl font-bold my-4 text-center">More of My Stuff</h1>
+	<div class="w-full lg:w-[50%] mx-auto">
+		<svelte:component
+		this={Carousel}
+		bind:this={carousel}
+		>
+		<div>
+			<img src="/pic1.jpg" class="w-[100%] md:w-[50%] mx-auto" />
 		</div>
+		<div>
+			<img src="/pic2.jpg" class="w-[100%] md:w-[50%] mx-auto" />
+		</div>
+		<div>
+			<img src="/pic3.jpg" class="w-[100%] md:w-[50%] mx-auto" />
+		</div>
+		</svelte:component>
 	</div>
 </section>
 <footer class="bg-primary-content py-10">
@@ -99,5 +98,9 @@ section {
 	height: auto;
 	max-width: 500px;
 	margin: 0 auto;
+}
+.sc-carousel-button.sc-carousel-arrow__circle {
+  width: 43px !important;
+  height: 46px !important;
 }
 </style>
